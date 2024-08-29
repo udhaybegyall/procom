@@ -43,7 +43,9 @@ export default function CompareProducts() {
     },
     {
       attribute: "Discount",
-      ...Object.fromEntries(compareProducts.map((p) => [p.id, p.discount])),
+      ...Object.fromEntries(
+        compareProducts.map((p) => [p.id, p.discountPercentage])
+      ),
     },
   ];
 

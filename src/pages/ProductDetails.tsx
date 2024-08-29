@@ -12,6 +12,8 @@ export default function ProductDetails() {
   const navigate = useNavigate();
   const theme = useTheme();
 
+  console.log(products);
+
   const columns: ColumnsType<Product> = [
     {
       title: "Title",
@@ -31,6 +33,12 @@ export default function ProductDetails() {
       dataIndex: "price",
       key: "price",
       sorter: (a, b) => a.price - b.price,
+    },
+    {
+      title: "Discount %",
+      dataIndex: "discountPercentage",
+      key: "discountPercentage",
+      sorter: (a, b) => a.discountPercentage - b.discountPercentage,
     },
     {
       title: "Brand",
@@ -92,7 +100,7 @@ export default function ProductDetails() {
     navigate("/compare", { state: { products: selectedProducts } });
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div style={{ color: theme.text }}>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
