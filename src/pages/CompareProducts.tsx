@@ -5,6 +5,8 @@ import { Product } from "../types";
 import useProducts from "../hooks/useProducts";
 import { useTheme } from "../theme";
 
+import ComparisonResult from "../components/ComparisonResult";
+
 export default function CompareProducts() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -111,6 +113,10 @@ export default function CompareProducts() {
       >
         Add More
       </Button>
+
+      {compareProducts.length >= 2 && (
+        <ComparisonResult products={compareProducts} />
+      )}
 
       <Modal
         title="Add More Products"
