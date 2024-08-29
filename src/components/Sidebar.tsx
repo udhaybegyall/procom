@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { ProductOutlined, SwitcherOutlined } from "@ant-design/icons";
+import { Tooltip } from "antd";
 import { useTheme } from "../theme";
 import "./components.css";
 
@@ -24,18 +25,23 @@ export default function Sidebar() {
             PC.
           </h2>
 
-          <Link
-            to="/"
-            className={`sidebar-item ${isActive("/") ? "active" : ""}`}
-          >
-            <ProductOutlined style={{ fontSize: "1.5rem" }} />
-          </Link>
-          <Link
-            to="/compare"
-            className={`sidebar-item ${isActive("/compare") ? "active" : ""}`}
-          >
-            <SwitcherOutlined style={{ fontSize: "1.5rem" }} />
-          </Link>
+          <Tooltip title="Products" placement="right">
+            <Link
+              to="/"
+              className={`sidebar-item ${isActive("/") ? "active" : ""}`}
+            >
+              <ProductOutlined style={{ fontSize: "1.5rem" }} />
+            </Link>
+          </Tooltip>
+
+          <Tooltip title="Compare" placement="right">
+            <Link
+              to="/compare"
+              className={`sidebar-item ${isActive("/compare") ? "active" : ""}`}
+            >
+              <SwitcherOutlined style={{ fontSize: "1.5rem" }} />
+            </Link>
+          </Tooltip>
         </div>
       </aside>
     </div>
