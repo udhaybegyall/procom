@@ -15,6 +15,9 @@ export default function ProductDetails() {
   const navigate = useNavigate();
   const theme = useTheme();
 
+  const isCompared = (productId: number) =>
+    comparedProducts.some((p) => p.id === productId);
+
   console.log(products);
 
   const columns: ColumnsType<Product> = [
@@ -24,6 +27,17 @@ export default function ProductDetails() {
       key: "title",
       width: 200,
       sorter: (a, b) => a.title.localeCompare(b.title),
+      render: (text, record) => (
+        <span
+          style={{
+            backgroundColor: isCompared(record.id)
+              ? theme.accent
+              : "transparent",
+          }}
+        >
+          {text}
+        </span>
+      ),
     },
     {
       title: "Description",
@@ -36,6 +50,17 @@ export default function ProductDetails() {
       dataIndex: "price",
       key: "price",
       sorter: (a, b) => a.price - b.price,
+      render: (text, record) => (
+        <span
+          style={{
+            backgroundColor: isCompared(record.id)
+              ? theme.accent
+              : "transparent",
+          }}
+        >
+          {text}%
+        </span>
+      ),
     },
     {
       title: "Discount %",
@@ -47,12 +72,34 @@ export default function ProductDetails() {
       title: "Brand",
       dataIndex: "brand",
       key: "brand",
+      render: (text, record) => (
+        <span
+          style={{
+            backgroundColor: isCompared(record.id)
+              ? theme.accent
+              : "transparent",
+          }}
+        >
+          {text}
+        </span>
+      ),
     },
     {
       title: "Category",
       dataIndex: "category",
       key: "category",
       sorter: (a, b) => a.category.localeCompare(b.category),
+      render: (text, record) => (
+        <span
+          style={{
+            backgroundColor: isCompared(record.id)
+              ? theme.accent
+              : "transparent",
+          }}
+        >
+          {text}
+        </span>
+      ),
     },
     {
       title: "Image",
@@ -71,7 +118,7 @@ export default function ProductDetails() {
           onClick={() => handleCompare(record)}
           disabled={comparedProducts.some((p) => p.id === record.id)}
         >
-          Compare
+          {isCompared(record.id) ? "Compared" : "Compare"}
         </Button>
       ),
     },

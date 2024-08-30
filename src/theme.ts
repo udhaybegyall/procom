@@ -13,7 +13,7 @@ export const lightTheme: Theme = {
     secondary: "#646cff",
     background: "#ffffff",
     text: "#1a1a1a",
-    accent: "#646cff",
+    accent: "#c7c7c7",
 }
 
 export const darkTheme: Theme = {
@@ -21,7 +21,7 @@ export const darkTheme: Theme = {
     secondary: "#646cff",
     background: "#1a1a1a",
     text: "#ffffff",
-    accent: "#646cff",
+    accent: "#c7c7c76f",
 }
 
 export const ThemeContext = createContext<Theme>(lightTheme);
