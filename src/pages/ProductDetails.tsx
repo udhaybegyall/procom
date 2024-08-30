@@ -1,14 +1,17 @@
-import { useState } from "react";
 import { Table, Button, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { ColumnsType } from "antd/es/table";
-import useProducts from "../hooks/useProducts";
 import { Product } from "../types";
 import { useTheme } from "../theme";
 
+import useProductComparison from "../hooks/useProductComparison";
+
+import useProducts from "../hooks/useProducts";
+
 export default function ProductDetails() {
   const { products = [], loading, error } = useProducts();
-  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+  const { comparedProducts, addProduct } = useProductComparison();
+
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -66,7 +69,7 @@ export default function ProductDetails() {
         <Button
           type="primary"
           onClick={() => handleCompare(record)}
-          disabled={selectedProducts.some((p) => p.id === record.id)}
+          disabled={comparedProducts.some((p) => p.id === record.id)}
         >
           Compare
         </Button>
@@ -74,30 +77,37 @@ export default function ProductDetails() {
     },
   ];
 
+  // handle compare button logic
   const handleCompare = (product: Product) => {
-    if (selectedProducts.length >= 4) {
+    if (comparedProducts.length >= 4) {
+      // notify user if they try to add more than 4 products
       notification.warning({
         message: "Maximum products selected",
         description: "You can compare up to 4 products at a time.",
       });
       return;
     }
-    setSelectedProducts([...selectedProducts, product]);
+
+    // add product to comparedProducts array
+    addProduct(product);
+
+    // notify user that the product has been added to the comparison list
     notification.success({
       message: "Product added to comparison",
       description: `${product.title} has been added to the comparison list.`,
     });
   };
 
+  // navigate to the compare page if the user has selected enough products
   const compareProducts = () => {
-    if (selectedProducts.length < 2) {
+    if (comparedProducts.length < 2) {
       notification.warning({
         message: "Not enough products selected",
         description: "Please select at least 2 products to compare.",
       });
       return;
     }
-    navigate("/compare", { state: { products: selectedProducts } });
+    navigate("/compare");
   };
 
   if (loading) return <div style={{ color: theme.text }}>Loading...</div>;
@@ -116,7 +126,7 @@ export default function ProductDetails() {
       <Button
         type="primary"
         onClick={compareProducts}
-        disabled={selectedProducts.length < 2}
+        disabled={comparedProducts.length < 2}
       >
         Compare Products
       </Button>
